@@ -1,0 +1,11 @@
+*.py[c,o]
+
+*.aof
+
+.idea/*
+
+.coverage
+.tox/
+.pytest_cache
+
+htmlcov/

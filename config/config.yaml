@@ -1,0 +1,36 @@
+application:
+  host: 0.0.0.0
+  port: 8080
+  backlog: 128
+  reuse_address: True
+
+redis_cache:
+  address: 'redis://localhost:6379/'
+#  address: 'redis://redis_cache:6379/'
+  db: 0
+  minsize: 1
+  maxsize: 10
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    default:
+      format: >-
+        SYSLOG_PROGRAMNAME[{process:d}]:
+        [{name:s}]
+        [{levelname:s}]
+        {message:s}
+      style: "{"
+  handlers:
+    syslog:
+      class: logging.handlers.SysLogHandler
+      level: DEBUG
+      formatter: default
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: default
+  root:
+    level: DEBUG
+    handlers: [syslog, console]
