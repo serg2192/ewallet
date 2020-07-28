@@ -4,6 +4,6 @@ python:
   - "3.7"
   - "3.8"
 install:
-  - pip install -r -U --no-cache ./requirements/test.txt
+  - pip install -U --no-cache -r ./requirements/test.txt
 script:
   - pytest
