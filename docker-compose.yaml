@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: billing_db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: billing
+    volumes:
+      - db:/var/lib/postgresql/data  # use volume for data persistance
+      - ./docker/postgres/scripts:/docker-entrypoint-initdb.d  # create tables
+    restart: 'always'
+    expose:
+      - "5432"
+#    ports:
+#      - "5432:5432"
+
+  billing:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      args:
+        PY_VERSION: 3.7
+      target: prod
+    image: billing:1.0
+    container_name: billing_app
+    environment:
+      APP_DIR: '/opt/app'
+    restart: 'always'
+    volumes:
+      - ./billing:/opt/app/billing
+      - ./config:/opt/app/config
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "3"
+    command: ["gunicorn", "-c", "./billing/gunicorn.conf.py", "billing.main:app_factory"]
+
+volumes:
+  # data will be stored until explicitly removed from host
+  db:

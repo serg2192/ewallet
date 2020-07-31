@@ -34,7 +34,7 @@ class ConfigSchema(Schema):
     application = fields.Dict(
         required=True,
     )  # Nested may be better
-    redis_cache = fields.Dict(
+    db = fields.Dict(
         required=True,
     )  # Nested may be better
     logging = fields.Dict(

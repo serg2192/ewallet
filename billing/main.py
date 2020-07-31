@@ -4,16 +4,16 @@ import logging
 from aiohttp import web
 
 from billing.settings import get_config
-# from billing.resources.routes import set_routes
+from billing.resources.routes import set_routes
 
 logger = logging.getLogger(__name__)
 
 ON_STARTUP = (
-    # 'billing.services.redis:on_startup',
+    'billing.services.postgres:on_startup',
 )
 
 ON_CLEANUP = (
-    # 'billing.services.redis:on_cleanup',
+    'billing.services.postgres:on_cleanup',
 )
 
 MIDDLEWARE = (
@@ -29,7 +29,7 @@ def imp(path):
 
 
 def setup_routes(app):
-    # set_routes(app)
+    set_routes(app)
     for i, resource in enumerate(app.router.resources(), start=1):
         logger.info(
             f'Route #{i:<4} --> {resource.canonical}, name={resource.name}'

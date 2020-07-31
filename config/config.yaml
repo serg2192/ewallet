@@ -4,12 +4,16 @@ application:
   backlog: 128
   reuse_address: True
 
-redis_cache:
-  address: 'redis://localhost:6379/'
-#  address: 'redis://redis_cache:6379/'
-  db: 0
+db:
+  dbname: billing
+  user: billing
+  password: password
+#  host: localhost
+  host: db
+  port: 5432
   minsize: 1
   maxsize: 10
+  timeout: 60
 
 logging:
   version: 1
