@@ -13,4 +13,5 @@ install:
 before_script:
   - docker-compose -f ./docker-compose.yaml run -p 5432:5432 --detach db
 script:
+  - sleep 10  # wait untill postgresql started
   - pytest
