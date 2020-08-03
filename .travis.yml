@@ -11,6 +11,6 @@ addons:
 install:
   - pip install -U --no-cache -r ./requirements/test.txt
 before_script:
-  - docker-compose -f ./docker-compose.yaml run -p 5432:5432 db
+  - docker-compose -f ./docker-compose.yaml run -p 5432:5432 --detach db
 script:
   - pytest
