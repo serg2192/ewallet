@@ -1,9 +1,16 @@
 language: python
+services:
+  - docker
 python:
   - "3.6"
   - "3.7"
   - "3.8"
+addons:
+  hosts:
+    - db  # probably not the best solution
 install:
   - pip install -U --no-cache -r ./requirements/test.txt
+before_script:
+  - docker-compose -f ./docker-compose.yaml run -p 5432:5432 db
 script:
   - pytest
